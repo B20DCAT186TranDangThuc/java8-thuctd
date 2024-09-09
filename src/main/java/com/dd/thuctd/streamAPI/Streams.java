@@ -1,6 +1,5 @@
-package com.dd.thuctd;
+package com.dd.thuctd.streamAPI;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;

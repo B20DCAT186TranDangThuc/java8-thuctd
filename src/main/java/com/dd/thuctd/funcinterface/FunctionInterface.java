@@ -1,4 +1,4 @@
-package com.dd.thuctd;
+package com.dd.thuctd.funcinterface;
 
 @FunctionalInterface
 public interface FunctionInterface {

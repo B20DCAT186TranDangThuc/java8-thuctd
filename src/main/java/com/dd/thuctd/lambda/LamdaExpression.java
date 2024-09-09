@@ -1,4 +1,4 @@
-package com.dd.thuctd;
+package com.dd.thuctd.lambda;
 
 import java.util.ArrayList;
 import java.util.List;

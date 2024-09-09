@@ -1,4 +1,4 @@
-package org.example.product;
+package com.dd.thuctd.product;
 
 import java.util.Date;
 
