@@ -70,4 +70,16 @@ public class Product {
     public void setDelete(boolean delete) {
         isDelete = delete;
     }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", categoryId=" + categoryId +
+                ", saleDate=" + saleDate +
+                ", quantity=" + quantity +
+                ", isDelete=" + isDelete +
+                '}';
+    }
 }
