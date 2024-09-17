@@ -1,0 +1,69 @@
+<html>
+<head th:replace="admin/layout/head :: head"></head>
+<body>
+
+<nav th:replace="admin/layout/header :: header"></nav>
+
+<nav th:replace="admin/layout/sidebar :: sidebar"></nav>
+
+<!--Content-->
+<div class="be-content" style="margin-top: 60px;">
+    <div class="main-content container-fluid">
+        <div class="main-content container-fluid">
+            <div class="page-head">
+                <h2 class="page-head-title">Product Management</h2>
+                <nav aria-label="breadcrumb" role="navigation">
+                    <ol class="breadcrumb page-head-nav">
+                        <li class="breadcrumb-item active">
+                            <a th:href="@{/admin/products}">Product List</a>
+                        </li>
+                        <li class="breadcrumb-item active">Create</li>
+                    </ol>
+                </nav>
+            </div>
+
+            <div class="col-8" style="margin: auto">
+                <div class="card card-border-color card-border-color-primary">
+                    <div class="card-header card-header-divider">Create Product</div>
+                    <div class="card-body">
+                        <form th:action="@{/admin/products/add}" method="post" enctype="multipart/form-data" th:object="${product}">
+                            <div class="form-group pt-2">
+                                <label for="codeProduct">Code</label>
+                                <input class="form-control" id="codeProduct" type="text" placeholder="Code Product" th:field="*{code}">
+                            </div>
+
+                            <div class="form-group pt-2">
+                                <label for="nameProduct">Name</label>
+                                <input class="form-control" id="nameProduct" type="text" placeholder="Name Product" th:field="*{name}">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="inputPrice">Giá</label>
+                                <input class="form-control" id="inputPrice" type="text" placeholder="Giá" th:field="*{price}">
+                            </div>
+
+                            <div class="form-group">
+                                <div class="mb-3">
+                                    <label for="formFile" class="form-label">Product Image</label>
+                                    <input class="form-control" type="file" name="fileData" id="formFile">
+                                </div>
+                            </div>
+
+                            <div class="row pt-3 justify-content-center">
+                                <p class="text-right">
+                                    <button class="btn btn-space btn-primary" type="submit">Submit</button>
+                                    <button class="btn btn-space btn-secondary" type="button" onclick="window.history.back();">Cancel</button>
+                                </p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+
+<div th:replace="admin/layout/scrips :: scrips"></div>
+</html>

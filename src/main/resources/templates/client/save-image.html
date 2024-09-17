@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="admin/layout/head :: head"></head>
+
+<body>
+
+<h2>Upload an Image</h2>
+
+<!-- Form upload ảnh -->
+<form method="POST" enctype="multipart/form-data" th:action="@{/uploads}">
+    <div class="mb-3">
+        <label for="formFile" class="form-label">Default file input example</label>
+        <input class="form-control" type="file" id="formFile" name="file">
+    </div>
+    <br/><br/>
+    <button type="submit">Upload</button>
+</form>
+
+<!-- Hiển thị thông báo sau khi upload thành công hoặc thất bại -->
+<p th:if="${message}" th:text="${message}"></p>
+
+</body>
+</html>

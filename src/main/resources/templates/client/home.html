@@ -1,0 +1,57 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="client/layout/head :: head"></head>
+<body >
+    <nav th:replace="client/layout/header :: header"></nav>
+    <!-- Header-->
+    <header class="bg-image p-5 text-center shadow-1-strong rounded mb-5 text-white" style="background-image: url('https://mdbcdn.b-cdn.net/img/new/slides/003.webp');">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="text-center text-white">
+                <h1 class="display-4 fw-bolder">Shop in style</h1>
+                <p class="lead fw-normal text-white-50 mb-0">With this shop hompeage template</p>
+            </div>
+        </div>
+    </header>
+
+<!--Content -->
+    <section class="py-5">
+        <div class="container px-4 px-lg-5 mt-5">
+            <div class="row gx-4 gx-lg-5">
+                <!-- Loop through products -->
+                <div th:each="product : ${products}" class="col-md-4 mb-5">
+                    <div class="card h-100">
+                        <img th:src="@{'/product/image/' + *{product.code}}" class="card-img-top" alt="Product Image" />
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <h5 class="fw-bolder" th:text="${product.name}">Product Name</h5>
+                                <span th:inline="text">[[${#numbers.formatDecimal(product.price, 0, 'COMMA', 2, 'POINT')}]] VND</span>
+                            </div>
+                        </div>
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center">
+                                <a class="btn btn-outline-dark mt-auto" th:href="@{/order/add(productId=${product.code})}">Add to cart</a>
+                                <a class="btn btn-outline-dark mt-auto" th:href="@{/products/${product.code}}">View options</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeModal">&times;</span>
+            <h2>Thông tin khách hàng</h2>
+            <form id="customerForm">
+                <label for="customerName">Tên khách hàng:</label><br>
+                <input type="text" id="customerName" name="customerName" required><br><br>
+                <label for="productQuantity">Số lượng sản phẩm:</label><br>
+                <input type="number" id="productQuantity" name="productQuantity" min="1" required><br><br>
+                <button type="submit">Xác nhận</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+</html>

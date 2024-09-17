@@ -1,0 +1,45 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light" th:fragment="header" >
+    <div class="container-fluid px-4 px-lg-5">
+        <a class="navbar-brand" href="#!">Start Bootstrap</a>
+        <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4 j">
+                <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
+
+                </li>
+            </ul>
+
+            <!-- Hiển thị khi đã đăng nhập -->
+            <div th:if="${session.username != null}" class="d-flex justify-content-between" style="width: 200px">
+                <!-- Cart Form -->
+                <form class="d-flex">
+                    <button class="btn btn-outline-dark" type="submit">
+                        <i class="bi-cart-fill me-1"></i>
+                        Cart
+                        <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                    </button>
+                </form>
+
+                <!-- Logout Form -->
+                <form class="d-flex" method="post" action="/logout">
+                    <button class="btn btn-secondary" type="submit">
+                        <span class="icon mdi mdi-power"></span>
+                        Logout
+                    </button>
+                </form>
+            </div>
+
+            <!-- Hiển thị khi chưa đăng nhập -->
+            <div th:if="${session.username == null}" class="d-flex">
+                <!-- Login Form -->
+                <form class="d-flex" action="/login" method="get">
+                    <button class="btn btn-primary" type="submit">
+                        Login
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</nav>

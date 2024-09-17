@@ -1,0 +1,35 @@
+<nav class="navbar navbar-expand fixed-top be-top-header" th:fragment="header">
+    <div class="container-fluid">
+
+        <div class="page-title"><a href="/admin">Shopping Management</a></div>
+        <div class="be-right-navbar">
+            <ul class="nav navbar-nav float-right be-user-nav">
+                <div th:if="${#authentication.principal != null}">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button"
+                           aria-expanded="false">
+                            <img th:src="@{/assets/img/avatar.png}" alt="Avatar"
+                                 style="width: 50px;border-radius: 50%;">
+                            <span class="user-name" th:text="${#authentication.principal.username}"
+                                  style="font-weight: 600; color: #000;"
+                            >Dang Thuc</span>
+                        </a>
+                        <div class="dropdown-menu" role="menu">
+                            <div class="user-info">
+                                <div class="user-name d-flex justify-content-center"
+                                     th:text="${#authentication.principal.authorities}"></div>
+                            </div>
+                            <form class="dropdown-item" method="post" action="/logout">
+                                <button class="btn btn-secondary" type="submit">
+                                    <span class="icon mdi mdi-power"></span>
+                                    Logout
+                                </button>
+                            </form>
+                        </div>
+                    </li>
+                </div>
+
+            </ul>
+        </div>
+    </div>
+</nav>

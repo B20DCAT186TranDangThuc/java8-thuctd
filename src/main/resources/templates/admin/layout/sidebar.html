@@ -1,0 +1,28 @@
+<div class="be-left-sidebar" th:fragment="sidebar" style="padding-top: 60px;">
+    <div class="left-sidebar-wrapper"><a class="left-sidebar-toggle" href="#">Dashboard</a>
+        <div class="left-sidebar-spacer">
+            <div class="left-sidebar-scroll ps ps--active-y">
+                <div class="left-sidebar-content">
+                    <ul class="sidebar-elements">
+                        <li class="divider">Menu</li>
+
+                        <li class="mb-4"><a href="/admin/accounts">
+                            <img th:src="@{/assets/img/icons8-user.png}"
+                                 style="width: 30px; height: 30px; padding-right: 8px;"/>
+                            <span>Account</span></a></li>
+                        <li class="mb-4"><a href="/admin/products">
+                            <img th:src="@{/assets/img/icons8-product.png}"
+                                 style="width: 30px; height: 30px; padding-right: 8px;"/>
+                            <span>Product</span></a></li>
+                        <li class="mb-4"><a href="/admin/orders">
+                            <img th:src="@{/assets/img/icons8-order.png}"
+                                 style="width: 30px; height: 30px; padding-right: 8px;"/>
+                            <span>Order</span></a></li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
