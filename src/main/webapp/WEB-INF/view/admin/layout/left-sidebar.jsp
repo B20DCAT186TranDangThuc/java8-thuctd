@@ -9,9 +9,9 @@
                     <ul class="sidebar-elements">
                         <li class="divider">Menu</li>
 
-                        <li class="mb-4"><a href="/job">
+                        <li class="mb-4"><a href="/admin/products">
                             <img src="/img/job.svg" style="width: 30px; height: 30px; padding-right: 8px;"/>
-                            <span>Project</span></a></li>
+                            <span>Product</span></a></li>
 
                         <li class="mb-4"><a href="/offers">
                             <img src="/img/offer.svg" style="width: 30px; height: 30px; padding-right: 8px;"/>
