@@ -31,6 +31,7 @@ public class ProductService {
                 .name(form.getName())
                 .price(form.getPrice())
                 .description(form.getDescription())
+                .quantity(form.getQuantity())
                 .build();
 
         if (!form.getImage().isEmpty()) {

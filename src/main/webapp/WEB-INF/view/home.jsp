@@ -139,7 +139,7 @@
                     <div class="card h-100">
                         <a href="shop-single.html">
                             <img src="${pageContext.request.contextPath}/uploads/${product.id}" class="card-img-top"
-                                 alt="${product.name}">
+                                 alt="${product.name}" style="min-height: 320px;">
                         </a>
                         <div class="card-body">
                             <ul class="list-unstyled d-flex justify-content-between">
@@ -155,7 +155,6 @@
                                 </li>
                             </ul>
                             <a href="shop-single.html" class="h2 text-decoration-none text-dark product-name">${product.name}</a>
-                            <p class="card-text">${product.description}</p>
                             <div class="row mt-2 justify-content-around">
                                 <a  href="purchase.html?productId=${product.id}" class="col-5 btn btn-primary">Add to Cart</a>
                                 <a href="purchase.html?productId=${product.id}" class=" col-4 btn btn-primary">Buy Now</a>

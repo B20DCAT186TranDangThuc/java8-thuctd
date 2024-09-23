@@ -78,6 +78,7 @@ public class ProductManagerController {
                 .code(product.getCode())
                 .name(product.getName())
                 .price(product.getPrice())
+                .quantity(product.getQuantity())
                 .description(product.getDescription())
                 .build();
 

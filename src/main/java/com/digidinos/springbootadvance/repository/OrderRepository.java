@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
@@ -17,4 +19,6 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
             "CAST(o.id AS string) LIKE %?1%)")
     Page<Order> searchOrdersByKeyword(String keyword, Pageable pageable);
 
+
+    List<Order> findAllByAccount_Id(Long accountId);
 }

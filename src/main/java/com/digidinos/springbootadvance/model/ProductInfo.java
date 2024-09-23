@@ -12,6 +12,7 @@ public class ProductInfo extends BaseEntity {
     private String name;
     private double price;
     private String description;
+    private long quantity;
 
     public ProductInfo(Product product) {
         this.id = product.getId();
@@ -19,5 +20,6 @@ public class ProductInfo extends BaseEntity {
         this.name = product.getName();
         this.price = product.getPrice();
         this.description = product.getDescription();
+        this.quantity = product.getQuantity();
     }
 }

@@ -78,4 +78,8 @@ public class OrderService {
         }
         return false;
     }
+
+    public List<Order> getAllOrderOfAccountById(Long id) {
+        return orderRepository.findAllByAccount_Id(id);
+    }
 }

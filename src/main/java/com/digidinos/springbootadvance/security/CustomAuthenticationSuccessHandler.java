@@ -33,9 +33,14 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         }
 
         request.getSession().setAttribute("userIdSS", account.getId());
-        request.getSession().setAttribute("userNameSS", authentication.getName());
-        request.getSession().setAttribute("roleNameSS", authentication.getAuthorities().iterator().next().getAuthority());
+        request.getSession().setAttribute("userNameSS", account.getUsername());
+        request.getSession().setAttribute("roleNameSS", account.getRole());
 
-        response.sendRedirect(request.getContextPath() + "/");
+        if (account.getRole().equals("ADMIN") || account.getRole().equals("EMPLOYEE")) {
+            response.sendRedirect(request.getContextPath() + "/admin");
+        } else {
+            response.sendRedirect(request.getContextPath() + "/");
+        }
+
     }
 }

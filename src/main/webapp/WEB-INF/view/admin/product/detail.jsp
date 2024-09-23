@@ -56,7 +56,7 @@
                                     <p class="text-muted mb-0">Đã bán</p>
                                 </div>
                                 <div class="px-3">
-                                    <p class="mb-2 h5">8512</p>
+                                    <p class="mb-2 h5">${product.quantity}</p>
                                     <p class="text-muted mb-0">Còn</p>
                                 </div>
                                 <div>

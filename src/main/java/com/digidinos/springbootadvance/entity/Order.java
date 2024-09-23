@@ -1,9 +1,6 @@
 package com.digidinos.springbootadvance.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -30,6 +27,12 @@ public class Order extends BaseEntity {
 
     private double amount;
 
+    private String status;
+
     @OneToMany(mappedBy = "order")
     private List<OrderDetail> orderDetails;
+
+    @ManyToOne
+    @JoinColumn(name = "account_id", nullable = false)
+    private Account account;
 }

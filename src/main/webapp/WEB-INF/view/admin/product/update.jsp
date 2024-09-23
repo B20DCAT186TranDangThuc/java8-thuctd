@@ -46,6 +46,9 @@
         <c:set var="errorPrice">
             <form:errors path="price" cssClass="text-danger"/>
         </c:set>
+        <c:set var="errorQuantity">
+            <form:errors path="quantity" cssClass="text-danger"/>
+        </c:set>
         <c:if test="${not empty param.error}">
             <div class="alert alert-danger" role="alert"
                  style="width: 50%;
@@ -82,6 +85,15 @@
                                 id="price"
                                 placeholder="Enter Price" path="price"/>
                         ${errorPrice}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="price">Quantity</label>
+                    <form:input type="number" class="form-control ${not empty errorQuantity ? 'is-invalid' : ''}"
+                                id="quantity"
+                                placeholder="Enter Price" path="quantity"/>
+                        ${errorQuantity}
                 </div>
             </div>
             <div class="col-md-6">

@@ -25,6 +25,8 @@ public class OrderInfo {
 
     private double amount;
 
+    private String status;
+
     private LocalDateTime orderDate;
 
     private List<OrderDetail> orderDetailList;

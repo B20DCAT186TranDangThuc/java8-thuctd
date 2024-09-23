@@ -1,12 +1,10 @@
 package com.digidinos.springbootadvance.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 @Entity
@@ -28,6 +26,9 @@ public class Account extends BaseEntity {
 
     @OneToOne(mappedBy = "account")
     private Cart cart;
+
+    @OneToMany(mappedBy = "account")
+    private List<Order> orders;
 
     @Override
     public String toString() {
