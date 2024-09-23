@@ -13,7 +13,7 @@
                             <img src="/img/job.svg" style="width: 30px; height: 30px; padding-right: 8px;"/>
                             <span>Product</span></a></li>
 
-                        <li class="mb-4"><a href="/offers">
+                        <li class="mb-4"><a href="/admin/orders">
                             <img src="/img/offer.svg" style="width: 30px; height: 30px; padding-right: 8px;"/>
                             <span>Order</span></a></li>
                         <li class="mb-4"><a href="/admin/accounts">

@@ -21,7 +21,6 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
     @Autowired
     private AccountService accountService;
 
-
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request,
                                         HttpServletResponse response,
@@ -33,7 +32,9 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
             throw new UsernameNotFoundException(username);
         }
 
-        request.getSession().setAttribute("userId", account.getId());
+        request.getSession().setAttribute("userIdSS", account.getId());
+        request.getSession().setAttribute("userNameSS", authentication.getName());
+        request.getSession().setAttribute("roleNameSS", authentication.getAuthorities().iterator().next().getAuthority());
 
         response.sendRedirect(request.getContextPath() + "/");
     }

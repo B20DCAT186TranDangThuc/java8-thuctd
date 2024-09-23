@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -75,4 +76,9 @@ public class ProductService {
     public void deleteProduct(Long id) {
         productRepository.deleteById(id);
     }
+
+    public List<ProductInfo> getAllProducts() {
+        return productRepository.findAll().stream().map(ProductInfo::new).collect(Collectors.toList());
+    }
+
 }

@@ -47,11 +47,11 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.INCLUDE)
                         .permitAll()
-                        .requestMatchers("/", "/login", "/lib/**", "/css/**", "/js/**",
+                        .requestMatchers("/", "/login", "/lib/**", "/css/**", "/js/**", "/client/**",
                                 "/img/**")
                         .permitAll()
 
-                        .requestMatchers("/forgot-password/**", "/register").permitAll()
+                        .requestMatchers("/forgot-password/**", "/register", "/uploads/**", "/products/**").permitAll()
                         .anyRequest().authenticated())
 
                 .formLogin(formLogin -> formLogin

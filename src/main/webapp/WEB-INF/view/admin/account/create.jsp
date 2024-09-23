@@ -79,8 +79,8 @@
                         <label for="role">Role:</label>
                         <form:select class="form-control" id="role" path="role">
                             <form:option value="ADMIN">Admin</form:option>
-                            <form:option value="EMPLOYEE">EMPLOYEE</form:option>
-                            <form:option value="USER">USER</form:option>
+                            <form:option value="EMPLOYEE">Employee</form:option>
+                            <form:option value="CUSTOMER">Customer</form:option>
                         </form:select>
                     </div>
 

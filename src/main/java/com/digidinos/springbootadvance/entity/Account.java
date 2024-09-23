@@ -2,6 +2,7 @@ package com.digidinos.springbootadvance.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.*;
 
@@ -24,6 +25,9 @@ public class Account extends BaseEntity {
     private String password;
 
     private String role;
+
+    @OneToOne(mappedBy = "account")
+    private Cart cart;
 
     @Override
     public String toString() {

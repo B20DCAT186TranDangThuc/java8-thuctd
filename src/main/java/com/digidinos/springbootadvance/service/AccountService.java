@@ -1,6 +1,7 @@
 package com.digidinos.springbootadvance.service;
 
 import com.digidinos.springbootadvance.entity.Account;
+import com.digidinos.springbootadvance.entity.Cart;
 import com.digidinos.springbootadvance.form.AccountForm;
 import com.digidinos.springbootadvance.form.RegisterForm;
 import com.digidinos.springbootadvance.model.AccountInfo;
@@ -24,18 +25,33 @@ public class AccountService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private CartService cartService;
+
     public Account getAccountByUsername(String username) {
         return accountRepository.findByUsername(username);
     }
 
     public Account register(RegisterForm registerForm) {
-        Account account = new Account();
-        account.setUsername(registerForm.getUsername());
-        account.setPassword(passwordEncoder.encode(registerForm.getPassword()));
-        account.setRole("USER");
+        Account account = Account.builder()
+                .username(registerForm.getUsername())
+                .password(passwordEncoder.encode(registerForm.getPassword()))
+                .role("CUSTOMER")
+                .build();
         account.setCreateAt(LocalDateTime.now());
         account.setUpdateAt(LocalDateTime.now());
-        return accountRepository.save(account);
+        Account saveAcc = accountRepository.save(account);
+
+        // Lưu tài khoản vào database
+        Account savedAccount = accountRepository.save(account);
+
+        // Nếu lưu tài khoản thành công, tạo giỏ hàng
+        if (savedAccount != null) {
+            Cart cart = new Cart(savedAccount, 0);
+            cartService.createCart(cart);
+            return savedAccount;
+        }
+        return null;
     }
 
     public Page<AccountInfo> handleSearchAndFilterAccount(String keyword, String role, Pageable pageable) {

@@ -34,7 +34,7 @@ public class AccountManagementController {
         Pageable pageable = (Pageable) PageRequest.of(page, 5, Sort.by("updateAt").descending());
         Page<AccountInfo> userPage = accountService.handleSearchAndFilterAccount(keyword, role, pageable);
 
-        model.addAttribute("listRole", List.of("ADMIN", "USER", "EMPLOYEE"));
+        model.addAttribute("listRole", List.of("ADMIN", "CUSTOMER", "EMPLOYEE"));
         model.addAttribute("userPage", userPage);
         model.addAttribute("keyword", keyword);
         model.addAttribute("role", role);
