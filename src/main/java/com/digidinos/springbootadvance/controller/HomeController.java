@@ -1,25 +1,23 @@
 package com.digidinos.springbootadvance.controller;
 
-import com.digidinos.springbootadvance.entity.Order;
-import com.digidinos.springbootadvance.entity.OrderDetail;
+import com.digidinos.springbootadvance.entity.CartItem;
 import com.digidinos.springbootadvance.entity.Product;
-import com.digidinos.springbootadvance.form.CustomerForm;
 import com.digidinos.springbootadvance.form.OrderDetailInfo;
 import com.digidinos.springbootadvance.model.ProductInfo;
+import com.digidinos.springbootadvance.service.CartService;
 import com.digidinos.springbootadvance.service.OrderService;
 import com.digidinos.springbootadvance.service.ProductService;
-import jakarta.validation.Valid;
-import org.antlr.v4.runtime.misc.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -30,6 +28,9 @@ public class HomeController {
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private CartService cartService;
 
     @GetMapping()
     public String home(Model model) {
@@ -51,7 +52,7 @@ public class HomeController {
     }
 
     @GetMapping("/cart/view/{productId}")
-    public String viewCart(@PathVariable("productId") Long productId, Model model) {
+    public String viewCartByProductId(@PathVariable("productId") Long productId, Model model) {
         Product product = productService.findProduct(productId);
 
         OrderDetailInfo orderDetailInfo = OrderDetailInfo.builder()
@@ -67,14 +68,20 @@ public class HomeController {
         return "client/product/cart";
     }
 
-    @PostMapping("/cart/checkout")
-    public String checkout(@ModelAttribute("orderDetailInfo") OrderDetailInfo orderDetailInfo,
-                           Model model) {
+    @GetMapping("cart/view/{accountId}")
+    public String viewCartByAccountId(@PathVariable("accountId") Long accountId, Model model) {
 
-        orderService.save(orderDetailInfo);
 
-        return "redirect:/products";
+
+        return "client/product/cart";
     }
+
+    @GetMapping("/items/{accountId}")
+    public ResponseEntity<List<CartItem>> getCartItems(@PathVariable Long accountId) {
+        List<CartItem> cartItems = cartService.getAllCartItemByAccountId(accountId);
+        return new ResponseEntity<>(cartItems, HttpStatus.OK);
+    }
+
 
     @GetMapping("/admin")
     public String getPageAdmin() {

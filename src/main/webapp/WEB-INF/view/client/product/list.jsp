@@ -53,7 +53,7 @@
                                             class="far fa-eye"></i></a></li>
                                     <li>
                                         <a class="btn btn-success text-white mt-2"
-                                           href="/cart/view/${product.id}"><i class="fas fa-cart-plus"></i>
+                                           href="/carts/add/${product.id}"><i class="fas fa-cart-plus"></i>
                                         </a>
                                     </li>
                                 </ul>

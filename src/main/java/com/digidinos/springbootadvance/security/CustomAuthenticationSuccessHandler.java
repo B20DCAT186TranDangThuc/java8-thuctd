@@ -2,6 +2,7 @@ package com.digidinos.springbootadvance.security;
 
 
 import com.digidinos.springbootadvance.entity.Account;
+import com.digidinos.springbootadvance.repository.CartItemRepository;
 import com.digidinos.springbootadvance.service.AccountService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,7 +13,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
-import javax.security.auth.login.AccountNotFoundException;
 import java.io.IOException;
 
 @Component
@@ -20,6 +20,8 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 
     @Autowired
     private AccountService accountService;
+    @Autowired
+    private CartItemRepository cartItemRepository;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request,
@@ -35,6 +37,8 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         request.getSession().setAttribute("userIdSS", account.getId());
         request.getSession().setAttribute("userNameSS", account.getUsername());
         request.getSession().setAttribute("roleNameSS", account.getRole());
+
+        request.getSession().setAttribute("numberCartItem", cartItemRepository.countByAccountId(account.getId()));
 
         if (account.getRole().equals("ADMIN") || account.getRole().equals("EMPLOYEE")) {
             response.sendRedirect(request.getContextPath() + "/admin");

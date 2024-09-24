@@ -4,7 +4,10 @@ import com.digidinos.springbootadvance.entity.Order;
 import com.digidinos.springbootadvance.entity.OrderDetail;
 import com.digidinos.springbootadvance.entity.Product;
 import com.digidinos.springbootadvance.form.OrderDetailInfo;
+import com.digidinos.springbootadvance.form.OrderForm;
+import com.digidinos.springbootadvance.form.OrderItem;
 import com.digidinos.springbootadvance.model.OrderInfo;
+import com.digidinos.springbootadvance.repository.AccountRepository;
 import com.digidinos.springbootadvance.repository.OrderDetailRepository;
 import com.digidinos.springbootadvance.repository.OrderRepository;
 import com.digidinos.springbootadvance.repository.ProductRepository;
@@ -17,6 +20,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderService {
@@ -29,6 +33,9 @@ public class OrderService {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private AccountRepository accountRepository;
 
     public Page<OrderInfo> searchOrders(String keyword, Pageable pageable) {
         Page<Order> orders = orderRepository.searchOrdersByKeyword(keyword, pageable);
@@ -47,36 +54,46 @@ public class OrderService {
         return new PageImpl<>(res, pageable, orders.getTotalElements());
     }
 
-    public boolean save(OrderDetailInfo orderDetailInfo) {
-
-        Product product = productRepository.findById(orderDetailInfo.getProductId()).get();
+    public boolean save(OrderForm orderForm, Long accountId) {
 
         Order order = Order.builder()
-                .customerName(orderDetailInfo.getCustomerName())
-                .customerPhone(orderDetailInfo.getCustomerPhone())
-                .customerAddress(orderDetailInfo.getCustomerAddress())
-                .customerEmail(orderDetailInfo.getCustomerEmail())
+                .account(accountRepository.findById(accountId).get())
+                .customerName(orderForm.getCustomerName())
+                .customerPhone(orderForm.getCustomerPhone())
+                .customerAddress(orderForm.getCustomerAddress())
+                .customerEmail(orderForm.getCustomerEmail())
+                .amount(orderForm.getOrderDetailInfos().stream()
+                        .mapToDouble(OrderItem::getAmount)
+                        .sum())
                 .orderDate(LocalDateTime.now())
-                .amount(orderDetailInfo.getPrice() * orderDetailInfo.getQuantity())
+                .status("CHUA XAC NHAN")
                 .build();
+
         order.setCreateAt(LocalDateTime.now());
         order.setUpdateAt(LocalDateTime.now());
 
-        Order newOrder = orderRepository.save(order);
-        if (newOrder != null) {
-            OrderDetail orderDetail = OrderDetail.builder()
-                    .price(orderDetailInfo.getPrice())
-                    .quantity(orderDetailInfo.getQuantity())
-                    .amount(orderDetailInfo.getPrice() * orderDetailInfo.getQuantity())
-                    .product(product)
-                    .order(newOrder)
-                    .build();
-            orderDetail.setCreateAt(LocalDateTime.now());
-            orderDetail.setUpdateAt(LocalDateTime.now());
-            orderDetailRepository.save(orderDetail);
-            return true;
-        }
-        return false;
+        Order finalOrder = orderRepository.save(order);
+
+        List<OrderDetail> orderDetails = orderForm.getOrderDetailInfos().stream()
+                .map(orderItem -> {
+                    OrderDetail orderDetail = new OrderDetail();
+                    orderDetail.setProduct(productRepository.findById(orderItem.getProductId()).get());
+                    orderDetail.setOrder(finalOrder);
+                    orderDetail.setQuantity(orderItem.getQuantity());
+                    orderDetail.setPrice(orderItem.getPrice());
+                    orderDetail.setAmount(orderItem.getAmount());
+
+                    orderDetail.setCreateAt(LocalDateTime.now());
+                    orderDetail.setUpdateAt(LocalDateTime.now());
+
+                    return orderDetail;
+                })
+                .collect(Collectors.toList());
+
+        orderDetailRepository.saveAll(orderDetails);
+
+        return true;
+
     }
 
     public List<Order> getAllOrderOfAccountById(Long id) {
