@@ -27,7 +27,7 @@
         border: 1px solid #edeff2;
         border-radius: 2px;
         padding: 50px 70px;
-        border:1px solid #ffffff;
+        border: 1px solid #ffffff;
     }
 
     .comments-title {
@@ -132,6 +132,16 @@
     .form-group textarea.form-input {
         height: 150px;
     }
+
+    .custom-alert {
+        position: fixed;
+        top: 20px; /* Điều chỉnh khoảng cách từ phía trên */
+        right: 20px; /* Điều chỉnh khoảng cách từ bên phải */
+        width: 300px; /* Đặt chiều rộng cho thông báo */
+        z-index: 9999; /* Đảm bảo thông báo nằm trên cùng */
+        margin-bottom: 10px; /* Khoảng cách giữa các thông báo */
+    }
+
 </style>
 <body>
 
@@ -208,53 +218,34 @@
         <div class="row">
             <div class="container">
                 <div class="be-comment-block">
-                    <h1 class="comments-title">Comments (3)</h1>
+                    <h1 class="comments-title">Comments (${listComment.size()})</h1>
+                    <c:forEach var="comment" items="${listComment}">
+                        <div class="be-comment">
+                            <div class="be-img-comment">
+                                <a href="blog-detail-2.html">
+                                    <img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt=""
+                                         class="be-ava-comment">
+                                </a>
+                            </div>
+                            <div class="be-comment-content">
+                <span class="be-comment-name">
+                    <a href="blog-detail-2.html">${comment.authorName}</a>
+                </span>
+                                <span class="be-comment-time">
+                    <i class="fa fa-clock-o"></i>
+                    ${comment.createAt}
+                </span>
+                                <p class="be-comment-text">
+                                        ${comment.content}
+                                </p>
+                            </div>
+                        </div>
+                    </c:forEach>
                     <div class="be-comment">
                         <div class="be-img-comment">
                             <a href="blog-detail-2.html">
-                                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="be-ava-comment">
-                            </a>
-                        </div>
-                        <div class="be-comment-content">
-
-				<span class="be-comment-name">
-					<a href="blog-detail-2.html">Ravi Sah</a>
-					</span>
-                            <span class="be-comment-time">
-					<i class="fa fa-clock-o"></i>
-					May 27, 2015 at 3:14am
-				</span>
-
-                            <p class="be-comment-text">
-                                Pellentesque gravida tristique ultrices.
-                                Sed blandit varius mauris, vel volutpat urna hendrerit id.
-                                Curabitur rutrum dolor gravida turpis tristique efficitur.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="be-comment">
-                        <div class="be-img-comment">
-                            <a href="blog-detail-2.html">
-                                <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="" class="be-ava-comment">
-                            </a>
-                        </div>
-                        <div class="be-comment-content">
-			<span class="be-comment-name">
-				<a href="blog-detail-2.html">Phoenix, the Creative Studio</a>
-			</span>
-                            <span class="be-comment-time">
-				<i class="fa fa-clock-o"></i>
-				May 27, 2015 at 3:14am
-			</span>
-                            <p class="be-comment-text">
-                                Nunc ornare sed dolor sed mattis. In scelerisque dui a arcu mattis, at maximus eros commodo. Cras magna nunc, cursus lobortis luctus at, sollicitudin vel neque. Duis eleifend lorem non ant. Proin ut ornare lectus, vel eleifend est. Fusce hendrerit dui in turpis tristique blandit.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="be-comment">
-                        <div class="be-img-comment">
-                            <a href="blog-detail-2.html">
-                                <img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="" class="be-ava-comment">
+                                <img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt=""
+                                     class="be-ava-comment">
                             </a>
                         </div>
                         <div class="be-comment-content">
@@ -266,39 +257,45 @@
 				May 27, 2015 at 3:14am
 			</span>
                             <p class="be-comment-text">
-                                Cras magna nunc, cursus lobortis luctus at, sollicitudin vel neque. Duis eleifend lorem non ant
+                                Cras magna nunc, cursus lobortis luctus at, sollicitudin vel neque. Duis eleifend lorem
+                                non ant
                             </p>
                         </div>
                     </div>
-                    <form class="form-block">
+                    <form:form action="/products/comment" method="post" class="form-block" modelAttribute="comment">
+                        <form:input type="hidden" path="productId" value="${product.id}"/>
                         <div class="row">
                             <div class="col-xs-12 col-sm-6 mb-2">
                                 <div class="form-group fl_icon">
                                     <div class="icon"><i class="fa fa-user"></i></div>
-                                    <input class="form-input" type="text" placeholder="Your name">
+                                    <form:input class="form-input" type="text" path="authorName"
+                                                placeholder="Your name"/>
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-6 fl_icon mb-2">
                                 <div class="form-group fl_icon">
                                     <div class="icon"><i class="fa fa-envelope-o"></i></div>
-                                    <input class="form-input" type="text" placeholder="Your email">
+                                    <form:input class="form-input" path="authorEmail" type="text"
+                                                placeholder="Your email"/>
                                 </div>
                             </div>
                             <div class="col-xs-12">
                                 <div class="form-group">
-                                    <textarea class="form-input" required="" placeholder="Your text"></textarea>
+                                    <form:textarea class="form-input" path="content" required=""
+                                                   placeholder="Your text"></form:textarea>
                                 </div>
                             </div>
 
                         </div>
                         <button type="submit" class="btn btn-success mt-4">Submit</button>
-                    </form>
+                    </form:form>
                 </div>
             </div>
         </div>
     </div>
 </section>
 <!-- End Content -->
+
 
 <jsp:include page="../layout/footer.jsp"/>
 
@@ -310,6 +307,5 @@
 <script src="/client/assets/js/custom.js"></script>
 
 <script>
-
 </script>
 </html>

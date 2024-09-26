@@ -3,7 +3,7 @@
 <nav class="navbar navbar-expand-lg navbar-light shadow">
     <div class="container d-flex justify-content-between align-items-center">
 
-        <a class="navbar-brand text-success logo h1 align-self-center" href="index.html">
+        <a class="navbar-brand text-success logo h1 align-self-center" href="/">
             SHOPPING
         </a>
 
@@ -39,8 +39,9 @@
                     </li>
                 </ul>
             </div>
-            <div class="navbar align-self-center d-flex">
-                <div class="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">
+            <div class="navbar align-self-center d-flex justify-content-between">
+                <!-- Search Input for Mobile -->
+                <div class="d-lg-none flex-fill mt-3 mb-4 col-7 col-sm-auto pr-3">
                     <div class="input-group">
                         <input type="text" class="form-control" id="inputMobileSearch" placeholder="Search ...">
                         <div class="input-group-text">
@@ -48,19 +49,44 @@
                         </div>
                     </div>
                 </div>
-                <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal" data-bs-target="#templatemo_search">
+
+                <!-- Search Icon for Desktop -->
+                <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal"
+                   data-bs-target="#templatemo_search">
                     <i class="fa fa-fw fa-search text-dark mr-2"></i>
                 </a>
+
+                <!-- Cart Icon -->
                 <a class="nav-icon position-relative text-decoration-none" href="/carts">
                     <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
-                    <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-light text-dark">
                         ${sessionScope.numberCartItem}
                     </span>
                 </a>
-                <a class="nav-icon position-relative text-decoration-none" href="#">
-                    <i class="fa fa-fw fa-user text-dark mr-3"></i>
-                    <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">+99</span>
-                </a>
+
+                <!-- User Info Icon -->
+                <!-- User Info Icon with Dropdown -->
+                <div class="nav-icon position-relative dropdown">
+                    <a class="text-decoration-none" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        <i class="fa fa-fw fa-user text-dark mr-3"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end p-2" aria-labelledby="userDropdown" style="margin-top: 16px;">
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="/accounts/info">
+                                <span class="icon mdi mdi-face me-2"></span>Account
+                            </a>
+                        </li>
+                        <li>
+                            <form class="w-100" method="post" action="/logout">
+                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                <button class="btn btn-primary w-100" type="submit">
+                                    <span class="icon mdi mdi-power me-2"></span> Logout
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
 

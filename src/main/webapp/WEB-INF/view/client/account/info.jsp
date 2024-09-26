@@ -234,8 +234,8 @@
                             <div class="text-center border-end">
                                 <img src="https://bootdey.com/img/Content/avatar/avatar1.png"
                                      class="img-fluid avatar-xxl rounded-circle" alt="">
-                                <h4 class="text-primary font-size-20 mt-3 mb-2">Jansh Wells</h4>
-                                <h5 class="text-muted font-size-13 mb-0">Web Designer</h5>
+                                <h4 class="text-primary font-size-20 mt-3 mb-2">${accountInfo.username}</h4>
+                                <h5 class="text-muted font-size-13 mb-0">${accountInfo.role}</h5>
                             </div>
                         </div><!-- end col -->
                         <div class="col-md-9">
@@ -271,185 +271,37 @@
 
                         <div class="row">
                             <div class="col-xl-12">
-                                <div class="task-list-box" id="landing-task">
-                                    <div id="task-item-1">
+                                <c:forEach var="order" items="${listOrder}">
+                                    <div class="task-list-box" id="order-task-${order.id}">
                                         <div class="card task-box rounded-3">
                                             <div class="card-body">
                                                 <div class="row align-items-center">
                                                     <div class="col-xl-6 col-sm-5">
                                                         <div class="checklist form-check font-size-15">
-                                                            <label class="form-check-label ms-1 task-title"
-                                                            >Create a New
-                                                                Landing</label>
+                                                            <label class="form-check-label ms-1 task-title">
+                                                                    ${order.customerName}
+                                                                <!-- Hoặc sử dụng thuộc tính thích hợp trong Order -->
+                                                            </label>
                                                         </div>
                                                     </div><!-- end col -->
                                                     <div class="col-xl-6 col-sm-7">
                                                         <div class="row align-items-center">
                                                             <div class="col-xl-5 col-md-6 col-sm-5">
                                                                 <div class="avatar-group mt-3 mt-xl-0 task-assigne">
-                                                                    <div class="avatar-group-item">
-                                                                        <a href="javascript: void(0);" class="d-block"
-                                                                           data-bs-toggle="tooltip" value="member-11"
-                                                                           data-bs-placement="top"
-                                                                           data-bs-original-title="Sarah Kerns">
-                                                                            <div class="avatar-sm">
-                                                                                <div class="avatar-title rounded-circle bg-info">
-                                                                                    S
-                                                                                </div>
-                                                                            </div>
-                                                                        </a>
-                                                                    </div>
-                                                                </div><!-- end avatar group -->
-                                                            </div><!-- end col -->
-                                                            <div class="col-xl-7 col-md-6 col-sm-7">
-                                                                <div class="d-flex flex-wrap gap-3 mt-3 mt-xl-0 justify-content-md-end">
-                                                                    <div>
-                                                                        <span class="badge rounded-pill badge-soft-warning font-size-11 task-status">Progress</span>
-                                                                    </div>
-                                                                    <div>
-                                                                        <a href="#" class="mb-0 text-muted fw-medium"
-                                                                           data-bs-toggle="modal"
-                                                                           data-bs-target=".bs-example-new-task"><i
-                                                                                class="mdi mdi-square-edit-outline font-size-16 align-middle"
-                                                                                onclick="editTask('task-item-1')"></i></a>
-                                                                    </div>
-                                                                    <div>
-                                                                        <a href="#" class="delete-item"
-                                                                           onclick="deleteProjects('task-item-1')">
-                                                                            <i class="mdi mdi-trash-can-outline align-middle font-size-16 text-danger"></i>
-                                                                        </a>
-                                                                    </div>
-                                                                </div>
-                                                            </div><!-- end col -->
-                                                        </div><!-- end row -->
-                                                    </div><!-- end col -->
-                                                </div><!-- end row -->
-                                            </div><!-- end cardbody -->
-                                        </div><!-- end card -->
-                                    </div>
-                                </div><!-- end -->
-
-                                <div class="task-list-box" id="blog-task">
-                                    <div id="task-item-3">
-                                        <div class="card task-box rounded-3">
-                                            <div class="card-body">
-                                                <div class="row align-items-center">
-                                                    <div class="col-xl-6 col-sm-5">
-                                                        <div class="checklist form-check font-size-15">
-                                                            <label class="form-check-label ms-1 task-title"
-                                                            >Create a Blog Template
-                                                                UI</label>
-                                                        </div>
-                                                    </div><!-- end col -->
-                                                    <div class="col-xl-6 col-sm-7">
-                                                        <div class="row align-items-center">
-                                                            <div class="col-xl-5 col-md-6 col-sm-5">
-                                                                <div class="avatar-group mt-3 mt-xl-0 task-assigne">
-                                                                    <div class="avatar-group-item">
-                                                                        <a href="javascript: void(0);"
-                                                                           class="d-inline-block"
-                                                                           data-bs-toggle="tooltip"
-                                                                           data-bs-placement="top" value="member-6"
-                                                                           aria-label="Scott Edward"
-                                                                           data-bs-original-title="Scott Edward">
-                                                                            <img src="https://bootdey.com/img/Content/avatar/avatar6.png"
-                                                                                 alt=""
-                                                                                 class="rounded-circle avatar-sm">
-                                                                        </a>
-                                                                    </div>
-                                                                    <div class="avatar-group-item">
-                                                                        <a href="javascript: void(0);" class="d-block"
-                                                                           data-bs-toggle="tooltip" value="member-12"
-                                                                           data-bs-placement="top"
-                                                                           data-bs-original-title="Denny Silva">
-                                                                            <div class="avatar-sm">
-                                                                                <div class="avatar-title rounded-circle bg-primary">
-                                                                                    D
-                                                                                </div>
-                                                                            </div>
-                                                                        </a>
-                                                                    </div>
-                                                                    <div class="avatar-group-item">
-                                                                        <a href="javascript: void(0);"
-                                                                           class="d-inline-block"
-                                                                           data-bs-toggle="tooltip"
-                                                                           data-bs-placement="top" value="member-10"
-                                                                           aria-label="Betty Cooney"
-                                                                           data-bs-original-title="Betty Cooney">
-                                                                            <img src="https://bootdey.com/img/Content/avatar/avatar1.png"
-                                                                                 alt=""
-                                                                                 class="rounded-circle avatar-sm">
-                                                                        </a>
-                                                                    </div>
-                                                                    <div class="avatar-group-item">
-                                                                        <a href="javascript: void(0);"
-                                                                           class="d-inline-block"
-                                                                           data-bs-toggle="tooltip"
-                                                                           data-bs-placement="top" value="member-5"
-                                                                           aria-label="Michael Jackson"
-                                                                           data-bs-original-title="Michael Jackson">
-                                                                            <img src="https://bootdey.com/img/Content/avatar/avatar5.png"
-                                                                                 alt=""
-                                                                                 class="rounded-circle avatar-sm">
-                                                                        </a>
-                                                                    </div>
-                                                                </div><!-- end avatar group -->
-                                                            </div><!-- end col -->
-                                                            <div class="col-xl-7 col-md-6 col-sm-7">
-                                                                <div class="d-flex flex-wrap gap-3 mt-3 mt-xl-0 justify-content-md-end">
-                                                                    <div>
-                                                                        <span class="badge rounded-pill badge-soft-danger font-size-11 task-status">Pending</span>
-                                                                    </div>
-                                                                    <div>
-                                                                        <a href="#" class="mb-0 text-muted fw-medium"
-                                                                           data-bs-toggle="modal"
-                                                                           data-bs-target=".bs-example-new-task"><i
-                                                                                class="mdi mdi-square-edit-outline font-size-16 align-middle"
-                                                                                onclick="editTask('task-item-3')"></i></a>
-                                                                    </div>
-                                                                    <div>
-                                                                        <a href="#" class="delete-item"
-                                                                           onclick="deleteProjects('task-item-3')">
-                                                                            <i class="mdi mdi-trash-can-outline font-size-16 align-middle text-danger"></i>
-                                                                        </a>
-                                                                    </div>
-                                                                </div>
-                                                            </div><!-- end col -->
-                                                        </div><!-- end row -->
-                                                    </div><!-- end col -->
-                                                </div><!-- end row -->
-                                            </div><!-- end cardbody -->
-                                        </div><!-- end card -->
-                                    </div>
-                                </div><!-- end -->
-
-                                <div class="task-list-box" id="comp-task">
-                                    <div id="task-item-4">
-                                        <div class="card task-box rounded-3">
-                                            <div class="card-body">
-                                                <div class="row align-items-center">
-                                                    <div class="col-xl-6 col-sm-5">
-                                                        <div class="checklist form-check font-size-15">
-                                                            <label class="form-check-label ms-1 task-title"
-                                                            >Chat App Pages</label>
-                                                        </div>
-                                                    </div><!-- end col -->
-                                                    <div class="col-xl-6 col-sm-7">
-                                                        <div class="row align-items-center">
-                                                            <div class="col-xl-5 col-md-6 col-sm-5">
-                                                                <div class="avatar-group mt-3 mt-xl-0 task-assigne">
-                                                                    <div class="avatar-group-item">
-                                                                        <a href="javascript: void(0);"
-                                                                           class="d-inline-block"
-                                                                           data-bs-toggle="tooltip"
-                                                                           data-bs-placement="top" value="member-3"
-                                                                           aria-label="Annmarie Paul"
-                                                                           data-bs-original-title="Annmarie Paul">
-                                                                            <img src="https://bootdey.com/img/Content/avatar/avatar3.png"
-                                                                                 alt=""
-                                                                                 class="rounded-circle avatar-sm">
-                                                                        </a>
-                                                                    </div>
+                                                                    <c:forEach var="orderDetail"
+                                                                               items="${order.orderDetails}">
+                                                                        <div class="avatar-group-item">
+                                                                            <a href="javascript: void(0);"
+                                                                               class="d-inline-block"
+                                                                               data-bs-toggle="tooltip"
+                                                                               data-bs-placement="top"
+                                                                               title="${orderDetail.product.name}">
+                                                                                <img src="${pageContext.request.contextPath}/uploads/${orderDetail.product.id}"
+                                                                                     alt=""
+                                                                                     class="rounded-circle avatar-sm">
+                                                                            </a>
+                                                                        </div>
+                                                                    </c:forEach>
                                                                 </div><!-- end avatar group -->
                                                             </div><!-- end col -->
                                                             <div class="col-xl-7 col-md-6 col-sm-7">
@@ -460,13 +312,14 @@
                                                                     <div>
                                                                         <a href="#" class="mb-0 text-muted fw-medium"
                                                                            data-bs-toggle="modal"
-                                                                           data-bs-target=".bs-example-new-task"><i
-                                                                                class="mdi mdi-square-edit-outline font-size-16 align-middle"
-                                                                                onclick="editTask('task-item-4')"></i></a>
+                                                                           data-bs-target=".bs-example-new-task">
+                                                                            <i class="mdi mdi-square-edit-outline font-size-16 align-middle"
+                                                                               onclick="editTask('order-task-${order.id}')"></i>
+                                                                        </a>
                                                                     </div>
                                                                     <div>
                                                                         <a href="#" class="delete-item"
-                                                                           onclick="deleteProjects('task-item-4')">
+                                                                           onclick="deleteProjects('order-task-${order.id}')">
                                                                             <i class="mdi mdi-trash-can-outline font-size-16 align-middle text-danger"></i>
                                                                         </a>
                                                                     </div>
@@ -475,11 +328,11 @@
                                                         </div><!-- end row -->
                                                     </div><!-- end col -->
                                                 </div><!-- end row -->
-                                            </div><!-- end cardbody -->
+                                            </div><!-- end card body -->
                                         </div><!-- end card -->
                                     </div>
-                                </div><!-- end -->
-
+                                    <!-- end task list box -->
+                                </c:forEach>
                             </div><!-- end col -->
                         </div><!-- end row -->
                     </div><!-- end tab pane -->
