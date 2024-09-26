@@ -27,9 +27,7 @@
 
 <div class="container py-5">
     <!-- Thay đổi modelAttribute để binding với OrderForm -->
-    <form:form action="/carts/checkout" method="post" modelAttribute="orderForm"
-               class="row d-flex justify-content-center my-4">
-        <!-- Lặp qua danh sách orderDetailInfos trong OrderForm -->
+    <form:form action="/carts/checkout" method="post" modelAttribute="orderForm" class="row d-flex justify-content-center my-4">
         <div class="col-md-8">
             <c:forEach items="${orderForm.orderDetailInfos}" var="orderDetailInfo" varStatus="status">
                 <form:input type="hidden" path="orderDetailInfos[${status.index}].productId"/>
@@ -37,27 +35,21 @@
                 <div class="card mb-4">
                     <div class="row" style="align-items: center; padding: 10px;">
                         <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
-                            <!-- Image -->
                             <div class="bg-image hover-overlay hover-zoom ripple rounded" data-mdb-ripple-color="light">
-                                <img src="${pageContext.request.contextPath}/uploads/${orderDetailInfo.productId}"
-                                     class="w-100" alt="Product Image"/>
+                                <img src="${pageContext.request.contextPath}/uploads/${orderDetailInfo.productId}" class="w-100" alt="Product Image"/>
                                 <a href="#!">
                                     <div class="mask" style="background-color: rgba(251, 251, 251, 0.2)"></div>
                                 </a>
                             </div>
-                            <!-- Image -->
                         </div>
 
                         <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
-                            <!-- Data -->
                             <p><strong>${orderDetailInfo.nameProduct}</strong></p>
                             <form:input path="orderDetailInfos[${status.index}].price" type="hidden"/>
                             <fmt:formatNumber value="${orderDetailInfo.price}" type="currency" currencySymbol="VND"/>
-                            <!-- Data -->
                         </div>
 
                         <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
-                            <!-- Quantity -->
                             <div class="d-flex mb-4" style="max-width: 300px">
                                 <a data-mdb-button-init data-mdb-ripple-init style="height: 41px;"
                                    class="btn btn-primary px-3 me-2"
@@ -71,6 +63,8 @@
                                                 path="orderDetailInfos[${status.index}].quantity"
                                                 oninput="updateAmount(this, '${status.index}')"/>
                                     <label class="form-label" for="form1">Quantity</label>
+                                    <!-- Hiển thị thông báo lỗi cho trường quantity -->
+                                    <form:errors path="orderDetailInfos[${status.index}].quantity" cssClass="text-danger"/>
                                 </div>
 
                                 <a data-mdb-button-init data-mdb-ripple-init style="height: 41px;"
@@ -79,25 +73,19 @@
                                     <i class="fas fa-plus"></i>
                                 </a>
                             </div>
-                            <!-- Quantity -->
 
-                            <!-- Amount -->
                             <p class="text-start text-md-center">
-                                <strong class="amount-display" id="amount-display-${status.index}"
-                                        data-set="${orderDetailInfo.amount}">
-                                        <%--                                    <fmt:formatNumber value="${orderDetailInfo.amount}" type="currency" currencySymbol="VND"/>--%>
+                                <strong class="amount-display" id="amount-display-${status.index}" data-set="${orderDetailInfo.amount}">
+                                    <fmt:formatNumber value="${orderDetailInfo.amount}" type="currency" currencySymbol="VND"/>
                                 </strong>
                                 <form:hidden path="orderDetailInfos[${status.index}].amount"/>
                             </p>
-                            <!-- Amount -->
                         </div>
                     </div>
                 </div>
-
             </c:forEach>
         </div>
 
-        <!-- Phần thông tin khách hàng -->
         <div class="col-md-4">
             <div class="card mb-4">
                 <div class="card-header py-3">
@@ -108,36 +96,39 @@
                         <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
                             Name
                             <span>
-                                <form:input class="form-control" type="text" path="customerName"/>
-                            </span>
+                            <form:input class="form-control" type="text" path="customerName"/>
+                            <form:errors path="customerName" cssClass="text-danger"/>
+                        </span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center px-0">
                             Email
                             <span>
-                                <form:input class="form-control" type="text" path="customerEmail"/>
-                            </span>
+                            <form:input class="form-control" type="text" path="customerEmail"/>
+                            <form:errors path="customerEmail" cssClass="text-danger"/>
+                        </span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center px-0">
                             Phone
                             <span>
-                                <form:input class="form-control" type="text" path="customerPhone"/>
-                            </span>
+                            <form:input class="form-control" type="text" path="customerPhone"/>
+                            <form:errors path="customerPhone" cssClass="text-danger"/>
+                        </span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center px-0">
                             Address
                             <span>
-                                <form:input class="form-control" type="text" path="customerAddress"/>
-                            </span>
+                            <form:input class="form-control" type="text" path="customerAddress"/>
+                            <form:errors path="customerAddress" cssClass="text-danger"/>
+                        </span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center px-0">
                             Total
                             <span>
-                                <strong class="total-amount" data-set="${orderForm.orderAmount}">
-                                        <fmt:formatNumber value="${orderForm.orderAmount}" type="currency"
-                                                          currencySymbol="VND"/>
-                                </strong>
-                                <form:input class="form-control orderAmount" type="hidden" path="orderAmount"/>
-                            </span>
+                            <strong class="total-amount" data-set="${orderForm.orderAmount}">
+                                <fmt:formatNumber value="${orderForm.orderAmount}" type="currency" currencySymbol="VND"/>
+                            </strong>
+                            <form:input class="form-control orderAmount" type="hidden" path="orderAmount"/>
+                        </span>
                         </li>
                     </ul>
 

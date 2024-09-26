@@ -3,9 +3,9 @@ package com.digidinos.springbootadvance.service;
 import com.digidinos.springbootadvance.entity.Order;
 import com.digidinos.springbootadvance.entity.OrderDetail;
 import com.digidinos.springbootadvance.entity.Product;
-import com.digidinos.springbootadvance.form.OrderDetailInfo;
 import com.digidinos.springbootadvance.form.OrderForm;
 import com.digidinos.springbootadvance.form.OrderItem;
+import com.digidinos.springbootadvance.form.StatusOrderForm;
 import com.digidinos.springbootadvance.model.OrderInfo;
 import com.digidinos.springbootadvance.repository.AccountRepository;
 import com.digidinos.springbootadvance.repository.OrderDetailRepository;
@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -47,6 +48,7 @@ public class OrderService {
                     .customerName(order.getCustomerName())
                     .amount(order.getAmount())
                     .orderDate(order.getOrderDate())
+                    .status(order.getStatus())
                     .build();
 
             res.add(orderInfo);
@@ -86,6 +88,11 @@ public class OrderService {
                     orderDetail.setCreateAt(LocalDateTime.now());
                     orderDetail.setUpdateAt(LocalDateTime.now());
 
+                    // Giảm số lượng tồn kho của sản phẩm
+                    Product product = orderDetail.getProduct();
+                    product.setQuantity(product.getQuantity() - orderItem.getQuantity());
+                    productRepository.save(product); // Lưu lại sản phẩm với số lượng đã cập nhật
+
                     return orderDetail;
                 })
                 .collect(Collectors.toList());
@@ -98,5 +105,43 @@ public class OrderService {
 
     public List<Order> getAllOrderOfAccountById(Long id) {
         return orderRepository.findAllByAccount_Id(id);
+    }
+
+    public Optional<OrderInfo> handleFindByOrderId(Long orderId) {
+        return orderRepository.findById(orderId).map(OrderInfo::new);
+    }
+
+    public Order updateStatus(StatusOrderForm form) {
+        Order order = orderRepository.findById(form.getOrderId()).get();
+
+        order.setStatus(form.getStatus());
+        return orderRepository.save(order);
+
+    }
+
+    public boolean removeOrderItemFromOrder(Long orderItemId) {
+        if (orderDetailRepository.existsById(orderItemId)) {
+            orderDetailRepository.deleteById(orderItemId);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean deleteOrder(Long orderId) {
+        // Lấy tất cả các OrderDetail liên quan đến orderId
+        List<OrderDetail> orderDetails = orderDetailRepository.findByOrderId(orderId);
+
+        // Xóa tất cả các OrderDetail
+        if (!orderDetails.isEmpty()) {
+            orderDetailRepository.deleteAll(orderDetails);
+        }
+
+        // Kiểm tra xem đơn hàng có tồn tại không
+        if (orderRepository.existsById(orderId)) {
+            orderRepository.deleteById(orderId); // Xóa đơn hàng
+            return true; // Trả về true nếu xóa thành công
+        }
+
+        return false; // Trả về false nếu không tìm thấy đơn hàng để xóa
     }
 }
