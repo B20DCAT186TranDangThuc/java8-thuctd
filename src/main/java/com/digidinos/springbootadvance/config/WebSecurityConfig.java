@@ -51,7 +51,14 @@ public class WebSecurityConfig {
                                 "/img/**")
                         .permitAll()
 
-                        .requestMatchers("/forgot-password/**", "/register", "/uploads/**", "/products/**").permitAll()
+                        .requestMatchers("/forgot-password/**", "/register",
+                                "/products/comment", "/uploads/**", "/products", "products/detail/{productId}").permitAll()
+
+                        .requestMatchers("/cart/**", "/product/**").hasRole("USER")
+                        // Quyền cho EMPLOYEE
+                        .requestMatchers("/admin/orders", "/admin/orders/detail/{orderId}", "/admin").hasAnyRole("EMPLOYEE", "ADMIN")
+                        // Quyền cho ADMIN
+                        .requestMatchers("/admin/**", "/admin").hasRole("ADMIN")
                         .anyRequest().authenticated())
 
                 .formLogin(formLogin -> formLogin

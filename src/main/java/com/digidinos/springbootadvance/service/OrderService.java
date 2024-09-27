@@ -68,7 +68,7 @@ public class OrderService {
                         .mapToDouble(OrderItem::getAmount)
                         .sum())
                 .orderDate(LocalDateTime.now())
-                .status("CHUA XAC NHAN")
+                .status("PENDING")
                 .build();
 
         order.setCreateAt(LocalDateTime.now());

@@ -48,6 +48,7 @@ public class CartController {
         List<OrderItem> orderItems = cart.getCartItems().stream()
                 .map(cartItem -> {
                     OrderItem orderItem = OrderItem.builder()
+                            .id(cartItem.getId())
                             .productId(cartItem.getProduct().getId())
                             .quantity(cartItem.getQuantity())
                             .nameProduct(cartItem.getProduct().getName())
@@ -72,7 +73,7 @@ public class CartController {
     // add product in list product to cart
     @GetMapping("/add/{productId}")
     public String addToCartFromListProduct(@PathVariable("productId") Long productId,
-                                           Model model, HttpSession session,
+                                           RedirectAttributes redirectAttributes, HttpSession session,
                                            HttpServletRequest request) {
 
         Long userId = (Long) session.getAttribute("userIdSS");
@@ -82,7 +83,7 @@ public class CartController {
         }
 
         if (cartService.addCartItem(productId, 1, userId)) {
-            model.addAttribute("success", "Add to cart success");
+            redirectAttributes.addFlashAttribute("success", "Add to cart success");
             request.getSession().setAttribute("numberCartItem", cartItemRepository.countByAccountId(userId));
         }
 
@@ -91,10 +92,22 @@ public class CartController {
 
     }
 
+    @GetMapping("/deleteItem/{cartItemId}")
+    public String deleteItemFromCart(@PathVariable("cartItemId") Long cartItemId,
+                                     Model model, HttpSession session,
+                                     HttpServletRequest request) {
+
+        Long userId = (Long) session.getAttribute("userIdSS");
+        cartItemRepository.deleteById(cartItemId);
+        request.getSession().setAttribute("numberCartItem", cartItemRepository.countByAccountId(userId));
+        return "redirect:/carts";
+    }
+
     @PostMapping("/checkout")
     public String checkout(@Valid @ModelAttribute("orderForm") OrderForm orderForm,
                            BindingResult bindingResult,
-                           Model model, HttpSession session) {
+                           Model model, HttpSession session,
+                           RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("orderForm", orderForm);
@@ -112,6 +125,8 @@ public class CartController {
             });
             session.setAttribute("numberCartItem", 0);
         }
+
+        redirectAttributes.addFlashAttribute("success", "Order successfully checked out");
 
         return "redirect:/products";
     }

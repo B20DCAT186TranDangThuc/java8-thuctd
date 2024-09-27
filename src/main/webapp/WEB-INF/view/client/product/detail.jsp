@@ -5,7 +5,7 @@
 
 <html lang="en">
 <head>
-    <title>Zay Shop eCommerce HTML CSS Template</title>
+    <title>Shopping</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -150,6 +150,17 @@
 <!-- Start Content -->
 <section class="bg-light">
     <div class="container pb-5">
+        <c:if test="${not empty success}">
+            <div class="alert alert-success" role="alert" style="width: 40%; margin: 0 auto;">
+                    ${success}
+            </div>
+        </c:if>
+
+        <c:if test="${not empty failComment}">
+            <div class="alert alert-danger" role="alert" style="width: 40%; margin: 0 auto;">
+                    ${failComment}
+            </div>
+        </c:if>
         <div class="row">
             <div class="col-lg-5 mt-5">
                 <div class="card mb-3">
@@ -168,7 +179,7 @@
                             <fmt:formatNumber value="${product.price}" type="currency" currencySymbol="VND"/>
                         </p>
                         <p class="py-2">
-                            <span class="list-inline-item text-dark">Quantity: ${product.quantity} | 36 Comments</span>
+                            <span class="list-inline-item text-dark">Quantity: ${product.quantity} | ${listComment.size()} Comments</span>
                         </p>
 
 
@@ -233,7 +244,7 @@
                 </span>
                                 <span class="be-comment-time">
                     <i class="fa fa-clock-o"></i>
-                    ${comment.createAt}
+                    ${comment.createAt.format(formater)}
                 </span>
                                 <p class="be-comment-text">
                                         ${comment.content}
@@ -241,48 +252,44 @@
                             </div>
                         </div>
                     </c:forEach>
-                    <div class="be-comment">
-                        <div class="be-img-comment">
-                            <a href="blog-detail-2.html">
-                                <img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt=""
-                                     class="be-ava-comment">
-                            </a>
-                        </div>
-                        <div class="be-comment-content">
-			<span class="be-comment-name">
-				<a href="blog-detail-2.html">Cüneyt ŞEN</a>
-			</span>
-                            <span class="be-comment-time">
-				<i class="fa fa-clock-o"></i>
-				May 27, 2015 at 3:14am
-			</span>
-                            <p class="be-comment-text">
-                                Cras magna nunc, cursus lobortis luctus at, sollicitudin vel neque. Duis eleifend lorem
-                                non ant
-                            </p>
-                        </div>
-                    </div>
                     <form:form action="/products/comment" method="post" class="form-block" modelAttribute="comment">
                         <form:input type="hidden" path="productId" value="${product.id}"/>
+                        <c:set var="errorName">
+                            <form:errors path="authorName"
+                                         cssClass="invalid-feedback" />
+                        </c:set>
+                        <c:set var="errorEmail">
+                            <form:errors path="authorEmail"
+                                         cssClass="invalid-feedback" />
+                        </c:set>
+                        <c:set var="errorContent">
+                            <form:errors path="content"
+                                         cssClass="invalid-feedback" />
+                        </c:set>
+
                         <div class="row">
                             <div class="col-xs-12 col-sm-6 mb-2">
                                 <div class="form-group fl_icon">
                                     <div class="icon"><i class="fa fa-user"></i></div>
-                                    <form:input class="form-input" type="text" path="authorName"
+                                    <form:input class="form-input ${not empty errorName ? 'is-invalid' : ''}" type="text" path="authorName"
                                                 placeholder="Your name"/>
+                                    <form:errors path="authorName"
+                                                 cssClass="invalid-feedback" />
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-6 fl_icon mb-2">
                                 <div class="form-group fl_icon">
                                     <div class="icon"><i class="fa fa-envelope-o"></i></div>
-                                    <form:input class="form-input" path="authorEmail" type="text"
+                                    <form:input class="form-input ${not empty errorEmail ? 'is-invalid' : ''}" path="authorEmail" type="text"
                                                 placeholder="Your email"/>
+                                    ${errorEmail}
                                 </div>
                             </div>
                             <div class="col-xs-12">
                                 <div class="form-group">
-                                    <form:textarea class="form-input" path="content" required=""
+                                    <form:textarea class="form-input ${not empty errorContent ? 'is-invalid' : ''}" path="content" required=""
                                                    placeholder="Your text"></form:textarea>
+                                    ${errorContent}
                                 </div>
                             </div>
 

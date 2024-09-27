@@ -5,7 +5,7 @@
 
 <html lang="en">
 <head>
-    <title>Zay Shop eCommerce HTML CSS Template</title>
+    <title>Shopping</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -137,7 +137,7 @@
             <c:forEach var="product" items="${products}">
                 <div class="col-12 col-md-3 mb-3">
                     <div class="card h-100">
-                        <a href="shop-single.html">
+                        <a href="/products/detail/${product.id}">
                             <img src="${pageContext.request.contextPath}/uploads/${product.id}" class="card-img-top"
                                  alt="${product.name}" style="min-height: 320px;">
                         </a>
@@ -154,10 +154,9 @@
                                     <fmt:formatNumber value="${product.price}" type="currency" currencySymbol="VND"/>
                                 </li>
                             </ul>
-                            <a href="shop-single.html" class="h2 text-decoration-none text-dark product-name">${product.name}</a>
-                            <div class="row mt-2 justify-content-around">
-                                <a  href="purchase.html?productId=${product.id}" class="col-5 btn btn-primary">Add to Cart</a>
-                                <a href="purchase.html?productId=${product.id}" class=" col-4 btn btn-primary">Buy Now</a>
+                            <a href="/products/detail/${product.id}" class="h2 text-decoration-none text-dark product-name">${product.name}</a>
+                            <div class="row mt-2 justify-content-center">
+                                <a  href="/carts/add/${product.id}" class="col-5 btn btn-primary">Add to Cart</a>
                             </div>
                         </div>
                     </div>

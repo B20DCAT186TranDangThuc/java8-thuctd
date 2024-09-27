@@ -5,7 +5,7 @@
 
 <html lang="en">
 <head>
-    <title>Zay Shop eCommerce HTML CSS Template</title>
+    <title>Shopping</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -31,13 +31,18 @@
     }
 </style>
 <body>
-
 <jsp:include page="../layout/header.jsp"/>
+
 
 <!-- Start Content -->
 <div class="container py-5">
     <div class="row">
         <!-- Product Loop -->
+        <c:if test="${not empty success}">
+            <div class="alert alert-success" role="alert" style="width: 40%; margin: 20px auto;">
+                    ${success}
+            </div>
+        </c:if>
         <div class="row">
             <c:forEach var="product" items="${productPage.content}">
                 <div class="col-md-3">
@@ -45,7 +50,7 @@
                         <div class="card rounded-0">
                             <img class="card-img rounded-0 img-fluid"
                                  src="${pageContext.request.contextPath}/uploads/${product.id}" alt="${product.name}"
-                            style="min-height: 320px;">
+                                 style="min-height: 320px;">
                             <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
                                 <ul class="list-unstyled">
                                     <li><a class="btn btn-success text-white mt-2"

@@ -42,4 +42,9 @@ public class AuthenController {
         accountService.register(registerForm);
         return "redirect:/login";
     }
+
+    @GetMapping("/403")
+    public String accessDenied() {
+        return "auth/403";
+    }
 }

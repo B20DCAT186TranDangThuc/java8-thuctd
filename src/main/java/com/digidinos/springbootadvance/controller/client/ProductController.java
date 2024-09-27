@@ -1,9 +1,9 @@
 package com.digidinos.springbootadvance.controller.client;
 
-import com.digidinos.springbootadvance.entity.Cart;
 import com.digidinos.springbootadvance.form.CommentForm;
 import com.digidinos.springbootadvance.form.OrderDetailInfo;
 import com.digidinos.springbootadvance.model.ProductInfo;
+import com.digidinos.springbootadvance.repository.CartItemRepository;
 import com.digidinos.springbootadvance.service.CartService;
 import com.digidinos.springbootadvance.service.CommentService;
 import com.digidinos.springbootadvance.service.ProductService;
@@ -21,8 +21,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.time.format.DateTimeFormatter;
 
 @Controller
 @RequestMapping("/products")
@@ -35,6 +34,8 @@ public class ProductController {
     private CartService cartService;
     @Autowired
     private CommentService commentService;
+    @Autowired
+    private CartItemRepository cartItemRepository;
 
     @GetMapping()
     public String getPageProduct(@RequestParam(name = "page", defaultValue = "0") Integer page,
@@ -60,19 +61,29 @@ public class ProductController {
 
         model.addAttribute("comment", new CommentForm());
 
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d, yyyy 'at' h:mma");
+        model.addAttribute("formater", formatter);
+
         return "client/product/detail";
     }
 
     @PostMapping("/comment")
     public String submitComment(@Valid @ModelAttribute("commentForm") CommentForm commentForm,
                                 BindingResult result,
-                                Model model) {
-        // Tìm sản phẩm theo ID
-        model.addAttribute("product", productService.findProduct(commentForm.getProductId()));
+                                Model model, RedirectAttributes redirectAttributes) {
+
 
         // Kiểm tra lỗi trong form
         if (result.hasErrors()) {
+            model.addAttribute("product", productService.findProduct(commentForm.getProductId()));
+            model.addAttribute("product", productService.findProduct(commentForm.getProductId()));
+            model.addAttribute("orderItem", new OrderDetailInfo());
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d, yyyy 'at' h:mma");
+            model.addAttribute("formater", formatter);
+            model.addAttribute("listComment", commentService.findAllByProductId(commentForm.getProductId()));
+            model.addAttribute("comment", commentForm);
 
+            model.addAttribute("failComment", "Please fill in all information before commenting");
             return "client/product/detail";
         }
 
@@ -80,7 +91,7 @@ public class ProductController {
         commentService.saveComment(commentForm);
 
         // Thêm thông báo thành công
-        model.addAttribute("message", "Comment đã được gửi thành công!");
+        redirectAttributes.addFlashAttribute("success", "Comment đã được gửi thành công!");
         return "redirect:/products/detail/" + commentForm.getProductId();
     }
 
@@ -118,7 +129,8 @@ public class ProductController {
         OrderDetailInfo orderDetailInfo = (OrderDetailInfo) session.getAttribute("orderItem");
 
         if (orderDetailInfo != null && cartService.addCartItem(orderDetailInfo.getProductId(), orderDetailInfo.getQuantity(), userId)) {
-            redirectAttributes.addAttribute("success", "Add to cart success");
+            redirectAttributes.addFlashAttribute("success", "Add to cart success");
+            request.getSession().setAttribute("numberCartItem", cartItemRepository.countByAccountId(userId));
             session.removeAttribute("orderItem");
         }
 

@@ -19,7 +19,6 @@ public class CommentForm {
 
     @NotBlank(message = "Comment không được để trống")
     @Size(min = 5, max = 300, message = "Comment phải có độ dài từ 5 đến 300 ký tự")
-    @Pattern(regexp = "^[a-zA-Z0-9.,!?\\s]*$", message = "Comment chứa ký tự không hợp lệ")
     private String content;
 
     @NotBlank(message = "Name name is required.")

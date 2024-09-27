@@ -5,7 +5,7 @@
 
 <html lang="en">
 <head>
-    <title>Zay Shop eCommerce HTML CSS Template</title>
+    <title>Shopping</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -307,7 +307,23 @@
                                                             <div class="col-xl-7 col-md-6 col-sm-7">
                                                                 <div class="d-flex flex-wrap gap-3 mt-3 mt-xl-0 justify-content-md-end">
                                                                     <div>
-                                                                        <span class="badge rounded-pill badge-soft-success font-size-11 task-status">Completed</span>
+                                                                        <c:choose>
+                                                                            <c:when test="${order.status == 'PENDING'}">
+                                                                                <span class="badge rounded-pill badge-soft-danger font-size-11 task-status">Pending</span>
+                                                                            </c:when>
+                                                                            <c:when test="${order.status == 'CONFIRMED'}">
+                                                                                <span class="badge rounded-pill badge-soft-warning font-size-11 task-status">Confirmed</span>
+                                                                            </c:when>
+                                                                            <c:when test="${order.status == 'SHIPPED'}">
+                                                                                <span class="badge rounded-pill badge-soft-success font-size-11 task-status">Shipped</span>
+                                                                            </c:when>
+                                                                            <c:when test="${order.status == 'DELIVERED'}">
+                                                                                <span class="badge rounded-pill badge-soft-success font-size-11 task-status">Delivered</span>
+                                                                            </c:when>
+                                                                            <c:otherwise>
+                                                                                <span class="badge rounded-pill badge-soft-secondary font-size-11 task-status">Unknown Status</span>
+                                                                            </c:otherwise>
+                                                                        </c:choose>
                                                                     </div>
                                                                     <div>
                                                                         <a href="#" class="mb-0 text-muted fw-medium"
